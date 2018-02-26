@@ -19,8 +19,13 @@ public class EntityMock {
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
         mock.setDocFileName("ГОСТ 8.586.1-2005.pdf");
+        mock.setHashTag01("#расчет расходомеров");
+        mock.setHashTag02("#сужающие устройства");
+        mock.setHashTag03("#монтаж кип");
+        mock.setHashTag04("#общие требования");
         mock.setNotes("Часть 1. Принцип метода измерений и общие требования.");
         mock.setDocStream(controller.readFile("d:\\Нормативные документы\\КиА\\ГОСТ 8.586.1-2005.pdf"));
+        mock.calculateHashSum();
         return mock;
     }
 
@@ -33,8 +38,13 @@ public class EntityMock {
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
         mock.setDocFileName("ГОСТ 8.586.2-2005.pdf");
+        mock.setHashTag01("#расчет расходомеров");
+        mock.setHashTag02("#сужающие устройства");
+        mock.setHashTag03("#монтаж кип");
+        mock.setHashTag04("#диафрагмы");
         mock.setNotes("Часть 2. Диафрагмы. Технические требования");
         mock.setDocStream(controller.readFile("d:\\Нормативные документы\\КиА\\ГОСТ 8.586.2-2005.pdf"));
+        mock.calculateHashSum();
         return mock;
     }
 
@@ -47,8 +57,13 @@ public class EntityMock {
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
         mock.setDocFileName("ГОСТ 8.586.3-2005.pdf");
+        mock.setHashTag01("#расчет расходомеров");
+        mock.setHashTag02("#сужающие устройства");
+        mock.setHashTag03("#монтаж кип");
+        mock.setHashTag04("#сопла");
         mock.setNotes("Часть 3. Сопла и сопла Вентури. Технические требования");
         mock.setDocStream(controller.readFile("d:\\Нормативные документы\\КиА\\ГОСТ 8.586.3-2005.pdf"));
+        mock.calculateHashSum();
         return mock;
     }
 
@@ -61,8 +76,13 @@ public class EntityMock {
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
         mock.setDocFileName("ГОСТ 8.586.4-2005.pdf");
+        mock.setHashTag01("#расчет расходомеров");
+        mock.setHashTag02("#сужающие устройства");
+        mock.setHashTag03("#монтаж кип");
+        mock.setHashTag04("#трубы вентури");
         mock.setNotes("Часть 4. Трубы Вентури. Технические требования");
         mock.setDocStream(controller.readFile("d:\\Нормативные документы\\КиА\\ГОСТ 8.586.4-2005.pdf"));
+        mock.calculateHashSum();
         return mock;
     }
 
@@ -75,8 +95,13 @@ public class EntityMock {
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
         mock.setDocFileName("ГОСТ 8.586.5-2005.pdf");
+        mock.setHashTag01("#расчет расходомеров");
+        mock.setHashTag02("#сужающие устройства");
+        mock.setHashTag03("#монтаж кип");
+        mock.setHashTag04("#измерение");
         mock.setNotes("Часть 5. Методика выполнения измерений");
         mock.setDocStream(controller.readFile("d:\\Нормативные документы\\КиА\\ГОСТ 8.586.5-2005.pdf"));
+        mock.calculateHashSum();
         return mock;
     }
 

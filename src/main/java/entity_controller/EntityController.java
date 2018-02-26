@@ -1,6 +1,7 @@
 package entity_controller;
 
 import datamodel.DocumentContainer;
+import entity_controller.exceptions.DuplicationDataException;
 import entity_controller.exceptions.InvalidDataException;
 import entity_controller.exceptions.IdNotFoundException;
 import entity_controller.exceptions.ShutDownException;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface EntityController {
 
-    void uploadDocument(DocumentContainer upload) throws InvalidDataException;
+    void uploadDocument(DocumentContainer upload) throws InvalidDataException, DuplicationDataException;
 
     void deleteDocumentByID(Integer id) throws Exception;
 

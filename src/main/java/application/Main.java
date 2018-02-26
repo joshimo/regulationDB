@@ -36,11 +36,15 @@ public class Main {
     public static void main(String... args) throws Exception {
 
         try {
-            /*DocumentContainer h = EntityMock.createNullMock();
-            econtroller.uploadDocument(h);*/
+            //DocumentContainer h = EntityMock.createNullMock();
+            mocks = EntityMock.createUploadMocks();
+            for (DocumentContainer dc : mocks)
+                econtroller.uploadDocument(dc);
+
+
             headers = econtroller.getAllDocumentHeaders();
-            for (DocumentHeader h : headers)
-                messenger.print(h.toString());
+            for (DocumentHeader hdr : headers)
+                messenger.print(hdr.toString());
             //econtroller.deleteDocumentByID(46);
         }
         finally {

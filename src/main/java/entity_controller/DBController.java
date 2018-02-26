@@ -1,8 +1,8 @@
 package entity_controller;
 
-import com.sun.istack.internal.NotNull;
 import datamodel.DocumentContainer;
 import datamodel.DocumentHeader;
+import entity_controller.exceptions.DuplicationDataException;
 import entity_controller.exceptions.InvalidDataException;
 import entity_controller.exceptions.IdNotFoundException;
 import entity_controller.exceptions.ShutDownException;
@@ -57,21 +57,25 @@ public class DBController implements EntityController {
      * */
 
     @Override
-    public void uploadDocument(DocumentContainer upload) throws InvalidDataException {
+    public void uploadDocument(DocumentContainer upload) throws InvalidDataException, DuplicationDataException {
 
-        validateDocument(upload);
+        if (!this.checkDuplication(upload)) {
 
-        if (upload != null && upload.getDocStream() != null && upload.getDocStream().length > 0 ) {
-            messenger.print("Beginning upload, wait...");
-            session = ourSessionFactory.openSession();
-            session.beginTransaction();
-            session.save(upload);
-            session.getTransaction().commit();
-            session.close();
-            messenger.print("Document have been uploaded!");
+            validateDocument(upload);
+
+            if (upload != null && upload.getDocStream() != null && upload.getDocStream().length > 0) {
+                messenger.print("Beginning upload, wait...");
+                session = ourSessionFactory.openSession();
+                session.beginTransaction();
+                session.save(upload);
+                session.getTransaction().commit();
+                session.close();
+                messenger.print("Document have been uploaded!");
+            } else
+                throw new InvalidDataException();
         }
         else
-            throw new InvalidDataException();
+            throw new DuplicationDataException();
     }
 
     @Override
@@ -203,7 +207,12 @@ public class DBController implements EntityController {
         }
     }
 
-    private boolean checkExistance(@NotNull DocumentContainer doc) {
+    private boolean checkDuplication(DocumentContainer doc) {
+        List<DocumentHeader> headers = getAllDocumentHeaders();
+        for (DocumentHeader header : headers)
+            if (header.getHashSum() == doc.getHashSum())
+            return true;
+
         return false;
     }
 }

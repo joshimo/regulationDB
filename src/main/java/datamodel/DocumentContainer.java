@@ -1,11 +1,8 @@
 package datamodel;
 
-
-
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.io.*;
 
@@ -108,57 +105,30 @@ public class DocumentContainer implements Serializable {
     private Boolean applicationDocumentDesign = false;
 
     @Basic
-    @Column(name = "UDF01")
-    private String udf01;
+    @Column(name = "HASHTAG01")
+    private String hashTag01;
 
     @Basic
-    @Column(name = "UDF02")
-    private String udf02;
+    @Column(name = "HASHTAG02")
+    private String hashTag02;
 
     @Basic
-    @Column(name = "UDF03")
-    private String udf03;
+    @Column(name = "HASHTAG03")
+    private String hashTag03;
 
     @Basic
-    @Column(name = "UDF04")
-    private String udf04;
-
-    @Basic
-    @Column(name = "UDF05")
-    private String udf05;
-
-    @Basic
-    @Column(name = "UDF06")
-    private String udf06;
-
-    @Basic
-    @Column(name = "UDF07")
-    private String udf07;
-
-    @Basic
-    @Column(name = "UDF08")
-    private String udf08;
-
-    @Basic
-    @Column(name = "UDF09")
-    private String udf09;
-
-    @Basic
-    @Column(name = "UDF10")
-    private String udf10;
-
-    @Basic
-    @Column(name = "UDF11")
-    private String udf11;
-
-    @Basic
-    @Column(name = "UDF12")
-    private String udf12;
+    @Column(name = "HASHTAG04")
+    private String hashTag04;
 
     @Basic
     @Size(max = 255)
     @Column(name = "NOTES")
     private String notes;
+
+    @Basic
+    @Min(1)
+    @Column (name = "HashSum")
+    private long hashSum;
 
 
     public Integer getDocNum() {
@@ -245,58 +215,29 @@ public class DocumentContainer implements Serializable {
         return applicationDocumentDesign;
     }
 
-    public String getUdf01() {
-        return udf01;
+    public String getHashTag01() {
+        return hashTag01;
     }
 
-    public String getUdf02() {
-        return udf02;
+    public String getHashTag02() {
+        return hashTag02;
     }
 
-    public String getUdf03() {
-        return udf03;
+    public String getHashTag03() {
+        return hashTag03;
     }
 
-    public String getUdf04() {
-        return udf04;
-    }
-
-    public String getUdf05() {
-        return udf05;
-    }
-
-    public String getUdf06() {
-        return udf06;
-    }
-
-    public String getUdf07() {
-        return udf07;
-    }
-
-    public String getUdf08() {
-        return udf08;
-    }
-
-    public String getUdf09() {
-        return udf09;
-    }
-
-    public String getUdf10() {
-        return udf10;
-    }
-
-    public String getUdf11() {
-        return udf11;
-    }
-
-    public String getUdf12() {
-        return udf12;
+    public String getHashTag04() {
+        return hashTag04;
     }
 
     public String getNotes() {
         return notes;
     }
 
+    public long getHashSum() {
+        return hashSum;
+    }
 
     public void setDocNum(Integer docNum) {
         this.docNum = docNum;
@@ -382,58 +323,30 @@ public class DocumentContainer implements Serializable {
         this.applicationDocumentDesign = applicationDocumentDesign;
     }
 
-    public void setUdf01(String udf01) {
-        this.udf01 = udf01;
+    public void setHashTag01(String hashTag01) {
+        this.hashTag01 = hashTag01;
     }
 
-    public void setUdf02(String udf02) {
-        this.udf02 = udf02;
+    public void setHashTag02(String hashTag02) {
+        this.hashTag02 = hashTag02;
     }
 
-    public void setUdf03(String udf03) {
-        this.udf03 = udf03;
+    public void setHashTag03(String hashTag03) {
+        this.hashTag03 = hashTag03;
     }
 
-    public void setUdf04(String udf04) {
-        this.udf04 = udf04;
-    }
-
-    public void setUdf05(String udf05) {
-        this.udf05 = udf05;
-    }
-
-    public void setUdf06(String udf06) {
-        this.udf06 = udf06;
-    }
-
-    public void setUdf07(String udf07) {
-        this.udf07 = udf07;
-    }
-
-    public void setUdf08(String udf08) {
-        this.udf08 = udf08;
-    }
-
-    public void setUdf09(String udf09) {
-        this.udf09 = udf09;
-    }
-
-    public void setUdf10(String udf10) {
-        this.udf10 = udf10;
-    }
-
-    public void setUdf11(String udf11) {
-        this.udf11 = udf11;
-    }
-
-    public void setUdf12(String udf12) {
-        this.udf12 = udf12;
+    public void setHashTag04(String hashTag04) {
+        this.hashTag04 = hashTag04;
     }
 
     public void setNotes(String notes) {
         this.notes = notes;
     }
 
+    public void calculateHashSum() {
+        for (int i = 0; i < docStream.length; i ++)
+            hashSum += docStream[i] + 128;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -442,23 +355,12 @@ public class DocumentContainer implements Serializable {
 
         DocumentContainer that = (DocumentContainer) o;
 
-        if (!getDocName().equals(that.getDocName())) return false;
-        if (!getDocDescription().equals(that.getDocDescription())) return false;
-        if (!getDocType().equals(that.getDocType())) return false;
-        if (!getMandatoryUA().equals(that.getMandatoryUA())) return false;
-        if (!getMandatoryRK().equals(that.getMandatoryRK())) return false;
-        return getMandatoryRU().equals(that.getMandatoryRU());
+        return getHashSum() == that.getHashSum();
     }
 
     @Override
     public int hashCode() {
-        int result = getDocName().hashCode();
-        result = 31 * result + getDocDescription().hashCode();
-        result = 31 * result + getDocType().hashCode();
-        result = 31 * result + getMandatoryUA().hashCode();
-        result = 31 * result + getMandatoryRK().hashCode();
-        result = 31 * result + getMandatoryRU().hashCode();
-        return result;
+        return (int) (getHashSum() ^ (getHashSum() >>> 32));
     }
 
     @Override
@@ -487,10 +389,16 @@ public class DocumentContainer implements Serializable {
                 "\n applicationSPDS = " + applicationSPDS +
                 "\n applicationDocumentDesign = " + applicationDocumentDesign +
                 "\n -------------------------------------------------------------------------------------------------" +
+                "\n hashTag01 = " + hashTag01 +
+                "\n hashTag02 = " + hashTag02 +
+                "\n hashTag03 = " + hashTag03 +
+                "\n hashTag04 = " + hashTag04 +
+                "\n -------------------------------------------------------------------------------------------------" +
                 "\n notes = " + notes +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n docFileName = " + docFileName +
                 "\n dataStreamSize = " + docStream.length +
+                "\n hashSum = " + hashSum +
                 "\n =================================================================================================";
     }
 }
