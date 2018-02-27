@@ -57,12 +57,20 @@ public class DocumentContainer implements Serializable {
     private Boolean mandatoryRU = false;
 
     @Basic
+    @Column(name = "MANDATORY_EU")
+    private Boolean mandatoryEU = false;
+
+    @Basic
     @Column(name = "APPLICATION_GENERAL")
     private Boolean applicationGeneral = false;
 
     @Basic
     @Column(name = "APPLICATION_MEASUREMENT")
     private Boolean applicationMeasurement = false;
+
+    @Basic
+    @Column(name = "APPLICATION_INSTRUMENTATION")
+    private Boolean applicationInstrumentation = false;
 
     @Basic
     @Column(name = "APPLICATION_SAFETY")
@@ -105,20 +113,36 @@ public class DocumentContainer implements Serializable {
     private Boolean applicationDocumentDesign = false;
 
     @Basic
-    @Column(name = "HASHTAG01")
+    @Column(name = "APPLICATION_FOR_INFORMATION")
+    private Boolean applicationForInformation = false;
+
+    @Basic
+    @Column(name = "APPLICATION_STP")
+    private Boolean applicationSTP = false;
+
+    @Basic
+    @Column(name = "HASH_TAG01")
     private String hashTag01;
 
     @Basic
-    @Column(name = "HASHTAG02")
+    @Column(name = "HASH_TAG02")
     private String hashTag02;
 
     @Basic
-    @Column(name = "HASHTAG03")
+    @Column(name = "HASH_TAG03")
     private String hashTag03;
 
     @Basic
-    @Column(name = "HASHTAG04")
+    @Column(name = "HASH_TAG04")
     private String hashTag04;
+
+    @Basic
+    @Column(name = "HASH_TAG05")
+    private String hashTag05;
+
+    @Basic
+    @Column(name = "HASH_TAG06")
+    private String hashTag06;
 
     @Basic
     @Size(max = 255)
@@ -127,9 +151,16 @@ public class DocumentContainer implements Serializable {
 
     @Basic
     @Min(1)
-    @Column (name = "HashSum")
+    @Column (name = "HASH_SUM")
     private long hashSum;
 
+    @Basic
+    @Min(1)
+    @Column (name = "FILE_SIZE")
+    private long fileSize;
+
+
+    /** Getters */
 
     public Integer getDocNum() {
         return docNum;
@@ -167,12 +198,20 @@ public class DocumentContainer implements Serializable {
         return mandatoryRU;
     }
 
+    public Boolean getMandatoryEU() {
+        return mandatoryEU;
+    }
+
     public Boolean getApplicationGeneral() {
         return applicationGeneral;
     }
 
     public Boolean getApplicationMeasurement() {
         return applicationMeasurement;
+    }
+
+    public Boolean getApplicationInstrumentation() {
+        return applicationInstrumentation;
     }
 
     public Boolean getApplicationSafety() {
@@ -215,6 +254,14 @@ public class DocumentContainer implements Serializable {
         return applicationDocumentDesign;
     }
 
+    public Boolean getApplicationForInformation() {
+        return applicationForInformation;
+    }
+
+    public Boolean getApplicationSTP() {
+        return applicationSTP;
+    }
+
     public String getHashTag01() {
         return hashTag01;
     }
@@ -231,6 +278,14 @@ public class DocumentContainer implements Serializable {
         return hashTag04;
     }
 
+    public String getHashTag05() {
+        return hashTag05;
+    }
+
+    public String getHashTag06() {
+        return hashTag06;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -238,6 +293,13 @@ public class DocumentContainer implements Serializable {
     public long getHashSum() {
         return hashSum;
     }
+
+    public long getFileSize() {
+        return fileSize;
+    }
+
+
+    /** Setters */
 
     public void setDocNum(Integer docNum) {
         this.docNum = docNum;
@@ -256,6 +318,7 @@ public class DocumentContainer implements Serializable {
     }
 
     public void setDocStream(Byte[] docStream) {
+        this.fileSize = docStream.length;
         this.docStream = docStream;
     }
 
@@ -275,12 +338,20 @@ public class DocumentContainer implements Serializable {
         this.mandatoryRU = mandatoryRU;
     }
 
+    public void setMandatoryEU(Boolean mandatoryEU) {
+        this.mandatoryEU = mandatoryEU;
+    }
+
     public void setApplicationGeneral(Boolean applicationGeneral) {
         this.applicationGeneral = applicationGeneral;
     }
 
     public void setApplicationMeasurement(Boolean applicationMeasurement) {
         this.applicationMeasurement = applicationMeasurement;
+    }
+
+    public void setApplicationInstrumentation(Boolean applicationInstrumentation) {
+        this.applicationInstrumentation = applicationInstrumentation;
     }
 
     public void setApplicationSafety(Boolean applicationSafety) {
@@ -323,6 +394,14 @@ public class DocumentContainer implements Serializable {
         this.applicationDocumentDesign = applicationDocumentDesign;
     }
 
+    public void setApplicationForInformation(Boolean applicationForInformation) {
+        this.applicationForInformation = applicationForInformation;
+    }
+
+    public void setApplicationSTP(Boolean applicationSTP) {
+        this.applicationSTP = applicationSTP;
+    }
+
     public void setHashTag01(String hashTag01) {
         this.hashTag01 = hashTag01;
     }
@@ -339,14 +418,30 @@ public class DocumentContainer implements Serializable {
         this.hashTag04 = hashTag04;
     }
 
+    public void setHashTag05(String hashTag05) {
+        this.hashTag05 = hashTag05;
+    }
+
+    public void setHashTag06(String hashTag06) {
+        this.hashTag06 = hashTag06;
+    }
+
     public void setNotes(String notes) {
         this.notes = notes;
     }
 
+
+    /** HashSum calculator */
+
     public void calculateHashSum() {
+        if (docStream == null)
+            return;
         for (int i = 0; i < docStream.length; i ++)
             hashSum += docStream[i] + 128;
     }
+
+
+    /** equals(), hashCode(), toString() */
 
     @Override
     public boolean equals(Object o) {
@@ -375,9 +470,11 @@ public class DocumentContainer implements Serializable {
                 "\n mandatoryUA = " + mandatoryUA +
                 "\n mandatoryRK = " + mandatoryRK +
                 "\n mandatoryRU = " + mandatoryRU +
+                "\n mandatoryEU = " + mandatoryEU +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n applicationGeneral = " + applicationGeneral +
                 "\n applicationMeasurement = " + applicationMeasurement +
+                "\n applicationInstrumentation = " + applicationInstrumentation +
                 "\n applicationSafety = " + applicationSafety +
                 "\n applicationASUTP = " + applicationASUTP +
                 "\n applicationProcess = " + applicationProcess +
@@ -388,17 +485,21 @@ public class DocumentContainer implements Serializable {
                 "\n applicationPID = " + applicationPID +
                 "\n applicationSPDS = " + applicationSPDS +
                 "\n applicationDocumentDesign = " + applicationDocumentDesign +
+                "\n applicationForInformation = " + applicationForInformation +
+                "\n applicationSTP = " + applicationSTP +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n hashTag01 = " + hashTag01 +
                 "\n hashTag02 = " + hashTag02 +
                 "\n hashTag03 = " + hashTag03 +
                 "\n hashTag04 = " + hashTag04 +
+                "\n hashTag05 = " + hashTag03 +
+                "\n hashTag06 = " + hashTag04 +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n notes = " + notes +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n docFileName = " + docFileName +
-                "\n dataStreamSize = " + docStream.length +
-                "\n hashSum = " + hashSum +
+                "\n dataFileSize = " + fileSize +
+                "\n #hashSum = " + hashSum +
                 "\n =================================================================================================";
     }
 }

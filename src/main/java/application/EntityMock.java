@@ -18,6 +18,7 @@ public class EntityMock {
         mock.setMandatoryRK(true);
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
+        mock.setMandatoryEU(false);
         mock.setDocFileName("ГОСТ 8.586.1-2005.pdf");
         mock.setHashTag01("#расчет расходомеров");
         mock.setHashTag02("#сужающие устройства");
@@ -37,6 +38,7 @@ public class EntityMock {
         mock.setMandatoryRK(true);
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
+        mock.setMandatoryEU(false);
         mock.setDocFileName("ГОСТ 8.586.2-2005.pdf");
         mock.setHashTag01("#расчет расходомеров");
         mock.setHashTag02("#сужающие устройства");
@@ -56,6 +58,7 @@ public class EntityMock {
         mock.setMandatoryRK(true);
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
+        mock.setMandatoryEU(false);
         mock.setDocFileName("ГОСТ 8.586.3-2005.pdf");
         mock.setHashTag01("#расчет расходомеров");
         mock.setHashTag02("#сужающие устройства");
@@ -75,6 +78,7 @@ public class EntityMock {
         mock.setMandatoryRK(true);
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
+        mock.setMandatoryEU(false);
         mock.setDocFileName("ГОСТ 8.586.4-2005.pdf");
         mock.setHashTag01("#расчет расходомеров");
         mock.setHashTag02("#сужающие устройства");
@@ -94,6 +98,7 @@ public class EntityMock {
         mock.setMandatoryRK(true);
         mock.setMandatoryRU(true);
         mock.setMandatoryUA(true);
+        mock.setMandatoryEU(false);
         mock.setDocFileName("ГОСТ 8.586.5-2005.pdf");
         mock.setHashTag01("#расчет расходомеров");
         mock.setHashTag02("#сужающие устройства");
@@ -107,10 +112,7 @@ public class EntityMock {
 
     public static DocumentContainer createNullMock() throws IOException  {
         DocumentContainer mock = new DocumentContainer();
-        mock.setDocName("Name");
-        mock.setDocDescription("Description");
-        mock.setDocType("Type");
-        mock.setDocFileName("filename");
+        mock.calculateHashSum();
         mock.setDocStream(controller.readFile("d:\\Нормативные документы\\КиА\\ГОСТ 8.586.5-2005.pdf"));
         return mock;
     }

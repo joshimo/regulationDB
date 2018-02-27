@@ -208,9 +208,11 @@ public class DBController implements EntityController {
     }
 
     private boolean checkDuplication(DocumentContainer doc) {
+
         List<DocumentHeader> headers = getAllDocumentHeaders();
+
         for (DocumentHeader header : headers)
-            if (header.getHashSum() == doc.getHashSum())
+            if (header.getHashSum() == doc.getHashSum() && header.getFileSize() == doc.getFileSize())
             return true;
 
         return false;

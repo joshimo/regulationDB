@@ -37,14 +37,19 @@ public class Main {
 
         try {
             //DocumentContainer h = EntityMock.createNullMock();
-            mocks = EntityMock.createUploadMocks();
-            for (DocumentContainer dc : mocks)
-                econtroller.uploadDocument(dc);
+            //mocks = EntityMock.createUploadMocks();
+            //for (DocumentContainer dc : mocks)
+            //    econtroller.uploadDocument(h);
 
+            DocumentContainer dc = econtroller.getDocumentByID(DocumentContainer.class, 1);
+            dc.setApplicationInstrumentation(true);
+            dc.setApplicationMeasurement(true);
+            econtroller.updateDocument(dc);
 
             headers = econtroller.getAllDocumentHeaders();
             for (DocumentHeader hdr : headers)
                 messenger.print(hdr.toString());
+
             //econtroller.deleteDocumentByID(46);
         }
         finally {
