@@ -1,8 +1,5 @@
-package file_controller;
+package regulation.file_controller;
 
-import datamodel.DocumentContainer;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface IOController {

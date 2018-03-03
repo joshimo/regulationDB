@@ -1,13 +1,13 @@
-package application;
+package regulation.application;
 
-import datamodel.DocumentHeader;
-import datamodel.DocumentContainer;
-import entity_controller.DBController;
-import entity_controller.EntityController;
-import file_controller.FileController;
-import file_controller.IOController;
-import messenger.ConsoleMessenger;
-import messenger.Messenger;
+import regulation.datamodel.DocumentHeader;
+import regulation.datamodel.DocumentContainer;
+import regulation.entity_controller.DBController;
+import regulation.entity_controller.EntityController;
+import regulation.file_controller.FileController;
+import regulation.file_controller.IOController;
+import regulation.messenger.ConsoleMessenger;
+import regulation.messenger.Messenger;
 
 import java.io.IOException;
 import java.util.List;

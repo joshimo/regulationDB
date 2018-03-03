@@ -1,13 +1,13 @@
-package entity_controller;
+package regulation.entity_controller;
 
-import datamodel.DocumentContainer;
-import datamodel.DocumentHeader;
-import entity_controller.exceptions.DuplicationDataException;
-import entity_controller.exceptions.InvalidDataException;
-import entity_controller.exceptions.IdNotFoundException;
-import entity_controller.exceptions.ShutDownException;
-import messenger.ConsoleMessenger;
-import messenger.Messenger;
+import regulation.datamodel.DocumentContainer;
+import regulation.datamodel.DocumentHeader;
+import regulation.entity_controller.exceptions.DuplicationDataException;
+import regulation.entity_controller.exceptions.InvalidDataException;
+import regulation.entity_controller.exceptions.IdNotFoundException;
+import regulation.entity_controller.exceptions.ShutDownException;
+import regulation.messenger.ConsoleMessenger;
+import regulation.messenger.Messenger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -177,6 +177,11 @@ public class DBController implements EntityController {
         }
 
         return doc;
+    }
+
+    @Override
+    public List<DocumentHeader> searchDocumentsByMask(final DocumentHeader mask) {
+        return null;
     }
 
     @Override

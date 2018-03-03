@@ -1,4 +1,4 @@
-package messenger;
+package regulation.messenger;
 
 public interface Messenger {
 

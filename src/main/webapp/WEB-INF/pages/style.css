@@ -6,3 +6,42 @@ h1
 {
     text-align: center;
 }
+table
+{
+    width: 100%;
+    position: relative;
+    border-collapse: collapse;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+th
+{
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    text-align: center;
+    font-style: inherit;
+}
+
+.tdl
+{
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 2px 1px 2px;
+    text-align: left;
+    padding: 2px 5px 2px 5px;
+}
+.tdc
+{
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 2px 1px 2px;
+    text-align: center;
+}
+#cancel, #submit
+{
+    height: 32px;
+    width: 240px;
+    margin: 20px;
+}

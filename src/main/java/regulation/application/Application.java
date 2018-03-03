@@ -1,17 +1,4 @@
-package application;
-
-import datamodel.DocumentContainer;
-import datamodel.DocumentHeader;
-import file_controller.FileController;
-import file_controller.IOController;
-import org.hibernate.*;
-import org.hibernate.query.Query;
-import org.hibernate.cfg.Configuration;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
+package regulation.application;
 
 
 public class Application {

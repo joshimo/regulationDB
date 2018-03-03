@@ -1,14 +1,15 @@
-package datamodel;
+package regulation.datamodel;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
+import java.io.*;
 
 
 @Entity
 @Table(name = "instrumentation_main")
-public class DocumentHeader implements Serializable {
+public class DocumentContainer implements Serializable {
 
     @Id
     @Column(name = "DOCUMENT_NUMBER")
@@ -17,7 +18,7 @@ public class DocumentHeader implements Serializable {
 
     @Basic
     @NotEmpty
-    @Size()
+    @Size(min = 3, max = 255)
     @Column(name = "DOCUMENT_NAME")
     private String docName = "";
 
@@ -29,13 +30,17 @@ public class DocumentHeader implements Serializable {
 
     @Basic
     @NotEmpty
-    @Size(min = 3, max = 255)
+    @Size(min = 4, max = 255)
     @Column(name = "DOCUMENT_FILE_NAME")
     private String docFileName;
 
     @Basic
+    @Column(name = "DOCUMENT_BLOB")
+    private Byte[] docStream;
+
+    @Basic
     @NotEmpty
-    @Size(min = 2, max = 255)
+    @Size(min = 2, max = 64)
     @Column(name = "DOCUMENT_TYPE")
     private String docType = "";
 
@@ -140,17 +145,22 @@ public class DocumentHeader implements Serializable {
     private String hashTag06;
 
     @Basic
+    @Size(max = 255)
     @Column(name = "NOTES")
     private String notes;
 
     @Basic
+    @Min(1)
     @Column (name = "HASH_SUM")
     private long hashSum;
 
     @Basic
+    @Min(1)
     @Column (name = "FILE_SIZE")
     private long fileSize;
 
+
+    /** Getters */
 
     public Integer getDocNum() {
         return docNum;
@@ -166,6 +176,10 @@ public class DocumentHeader implements Serializable {
 
     public String getDocFileName() {
         return docFileName;
+    }
+
+    public Byte[] getDocStream() {
+        return docStream;
     }
 
     public String getDocType() {
@@ -285,6 +299,8 @@ public class DocumentHeader implements Serializable {
     }
 
 
+    /** Setters */
+
     public void setDocNum(Integer docNum) {
         this.docNum = docNum;
     }
@@ -299,6 +315,22 @@ public class DocumentHeader implements Serializable {
 
     public void setDocFileName(String docFileName) {
         this.docFileName = docFileName;
+    }
+
+    public void setDocStream(Byte[] docStream) {
+        this.fileSize = docStream.length;
+        this.docStream = docStream;
+    }
+
+    public void setDocStream(byte[] docStream) {
+
+        this.fileSize = docStream.length;
+        Byte[] bytes = new Byte[docStream.length];
+
+        for (int i = 0; i < bytes.length; i ++)
+            bytes[i] = docStream[i];
+
+        this.setDocStream(bytes);
     }
 
     public void setDocType(String docType) {
@@ -410,14 +442,26 @@ public class DocumentHeader implements Serializable {
     }
 
 
+    /** HashSum calculator */
+
+    public void calculateHashSum() {
+        if (docStream == null)
+            return;
+        for (int i = 0; i < docStream.length; i ++)
+            hashSum += docStream[i] + 128;
+    }
+
+
+    /** equals(), hashCode(), toString() */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DocumentHeader header = (DocumentHeader) o;
+        DocumentContainer that = (DocumentContainer) o;
 
-        return getHashSum() == header.getHashSum();
+        return getHashSum() == that.getHashSum();
     }
 
     @Override
@@ -428,7 +472,7 @@ public class DocumentHeader implements Serializable {
     @Override
     public String toString() {
         return "\n docNum = " + docNum +
-                "\n Document Header" +
+                "\n Document Container" +
                 "\n =================================================================================================" +
                 "\n docName = " + docName +
                 "\n docDescription = " + docDescription +
@@ -437,6 +481,7 @@ public class DocumentHeader implements Serializable {
                 "\n mandatoryUA = " + mandatoryUA +
                 "\n mandatoryRK = " + mandatoryRK +
                 "\n mandatoryRU = " + mandatoryRU +
+                "\n mandatoryEU = " + mandatoryEU +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n applicationGeneral = " + applicationGeneral +
                 "\n applicationMeasurement = " + applicationMeasurement +
@@ -458,13 +503,13 @@ public class DocumentHeader implements Serializable {
                 "\n hashTag02 = " + hashTag02 +
                 "\n hashTag03 = " + hashTag03 +
                 "\n hashTag04 = " + hashTag04 +
-                "\n hashTag05 = " + hashTag05 +
-                "\n hashTag06 = " + hashTag06 +
+                "\n hashTag05 = " + hashTag03 +
+                "\n hashTag06 = " + hashTag04 +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n notes = " + notes +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n docFileName = " + docFileName +
-                "\n fileSize = " + fileSize +
+                "\n dataFileSize = " + fileSize +
                 "\n #hashSum = " + hashSum +
                 "\n =================================================================================================";
     }

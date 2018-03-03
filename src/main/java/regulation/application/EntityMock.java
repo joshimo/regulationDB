@@ -1,8 +1,8 @@
-package application;
+package regulation.application;
 
-import datamodel.DocumentContainer;
-import file_controller.FileController;
-import file_controller.IOController;
+import regulation.datamodel.DocumentContainer;
+import regulation.file_controller.FileController;
+import regulation.file_controller.IOController;
 import java.io.IOException;
 import java.util.ArrayList;
 

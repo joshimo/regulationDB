@@ -8,8 +8,8 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.username">joshimo</property>
         <property name="hibernate.connection.password">sakamoto</property>
-        <mapping class="datamodel.DocumentHeader"/>
-        <mapping class="datamodel.DocumentContainer"/>
+        <mapping class="regulation.datamodel.DocumentHeader"/>
+        <mapping class="regulation.datamodel.DocumentContainer"/>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->

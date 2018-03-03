@@ -1,4 +1,4 @@
-package entity_controller.exceptions;
+package regulation.entity_controller.exceptions;
 
 public abstract class ControllerException extends Exception {
 
