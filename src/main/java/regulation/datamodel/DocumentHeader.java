@@ -437,6 +437,7 @@ public class DocumentHeader implements Serializable {
                 "\n mandatoryUA = " + mandatoryUA +
                 "\n mandatoryRK = " + mandatoryRK +
                 "\n mandatoryRU = " + mandatoryRU +
+                "\n mandatoryRU = " + mandatoryEU +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n applicationGeneral = " + applicationGeneral +
                 "\n applicationMeasurement = " + applicationMeasurement +

@@ -169,7 +169,6 @@ public class SpringDBController implements EntityController{
         finally {
             session.close();
         }
-
         return doc;
     }
 

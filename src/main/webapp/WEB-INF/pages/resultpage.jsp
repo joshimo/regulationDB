@@ -1,9 +1,6 @@
-<%@ page import="java.util.List" %>
-<%@ page import="regulation.datamodel.DocumentHeader" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% List<DocumentHeader> headers = (ArrayList<DocumentHeader>) request.getAttribute("headers"); %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -33,21 +30,25 @@
                 <th>KZ</th>
                 <th>EU</th>
             </tr>
-            <% for (DocumentHeader header : headers) { %>
+            <c:forEach items="${headers}" var="hdr">
             <tr>
-                <td class="tdc"><%=header.getDocNum()%></td>
-                <td class="tdl"><%=header.getDocName()%></td>
-                <td class="tdl"><%=header.getDocDescription()%></td>
-                <td class="tdc"><%=header.getDocType()%></td>
-                <td class="tdc"><%=header.getMandatoryUA()?"да":"нет"%></td>
-                <td class="tdc"><%=header.getMandatoryRU()?"да":"нет"%></td>
-                <td class="tdc"><%=header.getMandatoryRK()?"да":"нет"%></td>
-                <td class="tdc"><%=header.getMandatoryEU()?"да":"нет"%></td>
-                <td class="tdl"><%=header.getNotes()%></td>
-                <td class="tdc"><a href="download?id=<%=header.getDocNum()%>">скачать</a></td>
-                <td class="tdc"><a href="showdetails?id=<%=header.getDocNum()%>">подробно</a></td>
+                <td class="tdc"><c:out value="${hdr.docNum}"/></td>
+                <td class="tdl"><c:out value="${hdr.docName}"/></td>
+                <td class="tdl"><c:out value="${hdr.docDescription}"/></td>
+                <td class="tdc"><c:out value="${hdr.docType}"/></td>
+                <c:if test="${hdr.mandatoryUA == true}"><td class="tdc">Да</td></c:if>
+                <c:if test="${hdr.mandatoryUA == false}"><td class="tdc">Нет</td></c:if>
+                <c:if test="${hdr.mandatoryRU == true}"><td class="tdc">Да</td></c:if>
+                <c:if test="${hdr.mandatoryRU == false}"><td class="tdc">Нет</td></c:if>
+                <c:if test="${hdr.mandatoryRK == true}"><td class="tdc">Да</td></c:if>
+                <c:if test="${hdr.mandatoryRK == false}"><td class="tdc">Нет</td></c:if>
+                <c:if test="${hdr.mandatoryEU == true}"><td class="tdc">Да</td></c:if>
+                <c:if test="${hdr.mandatoryEU == false}"><td class="tdc">Нет</td></c:if>
+                <td class="tdl"><c:out value="${hdr.notes}"/></td>
+                <td class="tdc"><a href="download?id=<c:out value="${hdr.docNum}"/>">скачать</a></td>
+                <td class="tdc"><a href="showdetails?id=<c:out value="${hdr.docNum}"/>">подробно</a></td>
             </tr>
-            <% } %>
+            </c:forEach>
         </table>
     </div>
 </body>

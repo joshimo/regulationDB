@@ -182,6 +182,13 @@ public class DocumentContainer implements Serializable {
         return docStream;
     }
 
+    public byte[] getPrimitiveDocStream() {
+        byte[] b = new byte[docStream.length];
+        for (int i = 0; i < docStream.length; i ++)
+            b[i] = docStream[i];
+        return b;
+    }
+
     public String getDocType() {
         return docType;
     }
@@ -503,8 +510,8 @@ public class DocumentContainer implements Serializable {
                 "\n hashTag02 = " + hashTag02 +
                 "\n hashTag03 = " + hashTag03 +
                 "\n hashTag04 = " + hashTag04 +
-                "\n hashTag05 = " + hashTag03 +
-                "\n hashTag06 = " + hashTag04 +
+                "\n hashTag05 = " + hashTag05 +
+                "\n hashTag06 = " + hashTag06 +
                 "\n -------------------------------------------------------------------------------------------------" +
                 "\n notes = " + notes +
                 "\n -------------------------------------------------------------------------------------------------" +

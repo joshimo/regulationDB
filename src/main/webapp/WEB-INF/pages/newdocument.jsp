@@ -13,11 +13,11 @@
             <fieldset>
                 <legend>Описание документа</legend>
                 <p>Название документа:</p>
-                <input type="text" name="docName" size="100" value="Название документа" required/><br/>
+                <input type="text" name="docName" size="100" required/><br/>
                 <p>Краткое описание документа:</p>
-                <input type="text" name="docDescription" size="100" value="Описание документа" required/><br/>
+                <input type="text" name="docDescription" size="100" required/><br/>
                 <p>Тип документа:</p>
-                <input type="text" name="docType" size="100" value="Тип документа" required/><br/>
+                <input type="text" name="docType" size="100" required/><br/>
             </fieldset>
             <fieldset>
                 <legend>Область действия документа:</legend>
@@ -61,7 +61,7 @@
             </fieldset>
             <fieldset>
                 <legend>Примечания и уточнения:</legend>
-                <input type="text" name="notes" size="160" value="Примечания"><br/>
+                <input type="text" name="notes" size="160"><br/>
             </fieldset>
             <fieldset>
                 <legend>Выберите файл для загрузки:</legend>
