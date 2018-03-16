@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import regulation.config.RegulationConfig;
 import regulation.datamodel.*;
 import regulation.entity_controller.Filter;
 import regulation.entity_controller.SpringDBController;
@@ -25,6 +26,9 @@ import java.util.List;
 @Controller
 public class WebController {
 
+    @Resource(name="regulationConfig")
+    private RegulationConfig config;
+
     @Resource(name = "udfMapping")
     private UDFMapping udfMapping = UDFMapping.getInstance();
 
@@ -40,23 +44,43 @@ public class WebController {
     List<DocHeader> headers;
     List<DocHeader> filteredHeaders;
 
+    private String userName = "";
+    private String userPassword = "";
+
     @RequestMapping(value = "/regulation", method = RequestMethod.GET)
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("departmentName", config.getDepartmentName());
+        return "index";
+    }
+
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public String auth(String userName, String userPassword) {
+        this.userName = userName;
+        this.userPassword = userPassword;
+        System.out.println(userName);
+        System.out.println(userPassword);
         return "index";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newdocument(Model model) {
         model.addAttribute("udfMapping", udfMapping);
-        return "newform";
+        if (! (userName.equals(config.getAdminName()) && userPassword.equals(config.getAdminPassword())))
+            return "autenthification";
+        else
+            return "newform";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editDocument(Model model, Integer id) throws Exception {
-        DocContainer hdr = springDBController.getDocumentByID(DocContainer.class, id);
-        model.addAttribute("udfMapping", udfMapping);
-        model.addAttribute("hdr", hdr);
-        return "editform";
+        if (! (userName.equals(config.getAdminName()) && userPassword.equals(config.getAdminPassword())))
+            return "autenthification";
+        else {
+            DocContainer hdr = springDBController.getDocumentByID(DocContainer.class, id);
+            model.addAttribute("udfMapping", udfMapping);
+            model.addAttribute("hdr", hdr);
+            return "editform";
+        }
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

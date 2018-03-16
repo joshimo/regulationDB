@@ -98,3 +98,8 @@ a:hover {
 .hidden {
     display: none;
 }
+footer {
+    text-align:center;
+    font-style:italic;
+    font-weight:bold;
+}

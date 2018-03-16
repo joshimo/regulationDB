@@ -14,6 +14,9 @@
             <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="regulationConfig" class="regulation.config.RegulationConfig">
+    </bean>
+
     <bean id="udfMapping" class="regulation.datamodel.UDFMapping">
     </bean>
 

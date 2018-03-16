@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.Properties;
 
 public class UDFMapping {
-    public static String uu = "";
     private String UDF01_VALUE = "";
     private String UDF02_VALUE = "";
     private String UDF03_VALUE = "";
