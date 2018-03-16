@@ -1,7 +1,7 @@
 package regulation.entity_controller;
 
-import regulation.datamodel.DocumentContainer;
-import regulation.datamodel.DocumentHeader;
+import regulation.datamodel.DocContainer;
+import regulation.datamodel.DocHeader;
 import regulation.entity_controller.exceptions.DuplicationDataException;
 import regulation.entity_controller.exceptions.IdNotFoundException;
 import regulation.entity_controller.exceptions.InvalidDataException;
@@ -51,7 +51,7 @@ public class SpringDBController implements EntityController{
      * */
 
     @Override
-    public void uploadDocument(DocumentContainer upload) throws InvalidDataException, DuplicationDataException {
+    public void uploadDocument(DocContainer upload) throws InvalidDataException, DuplicationDataException {
 
         if (!this.checkDuplication(upload)) {
 
@@ -83,7 +83,7 @@ public class SpringDBController implements EntityController{
             session = sessionFactory.openSession();
             if (checkID(id)) {
                 session.beginTransaction();
-                DocumentContainer doc = session.get(DocumentContainer.class, id);
+                DocContainer doc = session.get(DocContainer.class, id);
                 session.delete(doc);
                 session.getTransaction().commit();
                 if (!checkID(id))
@@ -105,11 +105,11 @@ public class SpringDBController implements EntityController{
         if (doc == null)
             throw new InvalidDataException();
 
-        if (doc instanceof DocumentContainer)
-            id = ((DocumentContainer) doc).getDocNum();
+        if (doc instanceof DocContainer)
+            id = ((DocContainer) doc).getDocNum();
 
-        if (doc instanceof DocumentHeader)
-            id = ((DocumentHeader) doc).getDocNum();
+        if (doc instanceof DocHeader)
+            id = ((DocHeader) doc).getDocNum();
 
         validateDocument(doc);
 
@@ -133,14 +133,14 @@ public class SpringDBController implements EntityController{
     }
 
     @Override
-    public List<DocumentHeader> getAllDocumentHeaders() {
+    public List<DocHeader> getAllDocumentHeaders() {
 
-        List<DocumentHeader> headers = new ArrayList<>();
+        List<DocHeader> headers = new ArrayList<>();
         session = sessionFactory.openSession();
 
-        Query query = session.createQuery("from DocumentHeader ");
+        Query query = session.createQuery("from DocHeader ");
         for (Object o : query.list())
-            headers.add((DocumentHeader) o);
+            headers.add((DocHeader) o);
 
         session.close();
 
@@ -155,12 +155,12 @@ public class SpringDBController implements EntityController{
 
         try {
             if (checkID(id)) {
-                if (doc instanceof DocumentContainer) {
-                    Query query = session.createQuery("from DocumentContainer where id=" + id);
+                if (doc instanceof DocContainer) {
+                    Query query = session.createQuery("from DocContainer where id=" + id);
                     doc = (T) query.list().get(0);
                 }
-                if (doc instanceof DocumentHeader) {
-                    Query query = session.createQuery("from DocumentHeader where id=" + id);
+                if (doc instanceof DocHeader) {
+                    Query query = session.createQuery("from DocHeader where id=" + id);
                     doc = (T) query.list().get(0);
                 }
             } else
@@ -173,10 +173,10 @@ public class SpringDBController implements EntityController{
     }
 
     @Override
-    public List<DocumentHeader> searchDocumentsByMask(final DocumentHeader mask) {
+    public List<DocHeader> searchDocumentsByMask(final DocHeader mask) {
 
-        List<DocumentHeader> headers;
-        List<DocumentHeader> searchResults = new ArrayList<>();
+        List<DocHeader> headers;
+        List<DocHeader> searchResults = new ArrayList<>();
 
         String maskName = "";
         String maskDescription = "";
@@ -200,18 +200,8 @@ public class SpringDBController implements EntityController{
                 maskDescription = mask.getDocDescription().toLowerCase().replaceAll(" ", "");
             if (mask.getDocType() != null)
                 maskType = mask.getDocType().toLowerCase().replaceAll(" ", "");
-            if (mask.getHashTag01() != null)
-                maskType = mask.getHashTag01().toLowerCase().replaceAll(" ", "");
-            if (mask.getHashTag02() != null)
-                maskType = mask.getHashTag02().toLowerCase().replaceAll(" ", "");
-            if (mask.getHashTag03() != null)
-                maskType = mask.getHashTag03().toLowerCase().replaceAll(" ", "");
-            if (mask.getHashTag04() != null)
-                maskType = mask.getHashTag04().toLowerCase().replaceAll(" ", "");
-            if (mask.getHashTag05() != null)
-                maskType = mask.getHashTag05().toLowerCase().replaceAll(" ", "");
-            if (mask.getHashTag06() != null)
-                maskType = mask.getHashTag06().toLowerCase().replaceAll(" ", "");
+            if (mask.getHashTags() != null)
+                maskType = mask.getHashTags().toLowerCase().replaceAll(" ", "");
 
             maskMandatoryUA = mask.getMandatoryUA();
             maskMandatoryRK = mask.getMandatoryRK();
@@ -220,7 +210,7 @@ public class SpringDBController implements EntityController{
 
             headers = getAllDocumentHeaders();
 
-            for (DocumentHeader header : headers) {
+            for (DocHeader header : headers) {
 
                 if (header.getDocName().toLowerCase().contains(mask.getDocName().toLowerCase()));
 
@@ -241,7 +231,7 @@ public class SpringDBController implements EntityController{
      * */
 
     private boolean checkID(Integer id) {
-        Query query = session.createQuery("from DocumentHeader where docNum=" + id);
+        Query query = session.createQuery("from DocHeader where docNum=" + id);
         return !query.list().isEmpty();
     }
 
@@ -258,11 +248,11 @@ public class SpringDBController implements EntityController{
         }
     }
 
-    private boolean checkDuplication(DocumentContainer doc) {
+    private boolean checkDuplication(DocContainer doc) {
 
-        List<DocumentHeader> headers = getAllDocumentHeaders();
+        List<DocHeader> headers = getAllDocumentHeaders();
 
-        for (DocumentHeader header : headers)
+        for (DocHeader header : headers)
             if (header.getHashSum() == doc.getHashSum() && header.getFileSize() == doc.getFileSize())
                 return true;
 

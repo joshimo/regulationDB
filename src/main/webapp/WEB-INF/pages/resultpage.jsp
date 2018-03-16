@@ -7,7 +7,7 @@
     <title>Нормативная база КИП</title>
 </head>
 <style>
-    <%@include file='style.css' %>
+    <%@include file='alt_style.css' %>
 </style>
 
 <body>
@@ -17,12 +17,11 @@
             <tr>
                 <th rowspan="2" style="width: 3%;">№</th>
                 <th rowspan="2" style="width: 15%;">Название</th>
-                <th rowspan="2" style="width: 35%;">Описание</th>
+                <th rowspan="2" style="width: 25%;">Описание</th>
                 <th rowspan="2" style="width: 5%;">Тип</th>
                 <th colspan="4" style="width: 10%;">Область действия</th>
-                <th rowspan="2" style="width: 20%;">Примечание</th>
-                <th rowspan="2" style="width: 6%;">Ссылка для скачивания</th>
-                <th rowspan="2" style="width: 6%;">Подробно</th>
+                <th rowspan="2" style="width: 32%;">Примечание</th>
+                <th rowspan="2" colspan="2" style="width: 10%;">Ссылки</th>
             </tr>
             <tr>
                 <th>UA</th>

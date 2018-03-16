@@ -1,7 +1,7 @@
 package regulation.entity_controller;
 
-import regulation.datamodel.DocumentContainer;
-import regulation.datamodel.DocumentHeader;
+import regulation.datamodel.DocContainer;
+import regulation.datamodel.DocHeader;
 import regulation.entity_controller.exceptions.DuplicationDataException;
 import regulation.entity_controller.exceptions.InvalidDataException;
 import regulation.entity_controller.exceptions.IdNotFoundException;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface EntityController {
 
-    void uploadDocument(DocumentContainer upload) throws InvalidDataException, DuplicationDataException;
+    void uploadDocument(DocContainer upload) throws InvalidDataException, DuplicationDataException;
 
     void deleteDocumentByID(Integer id) throws Exception;
 
@@ -21,7 +21,7 @@ public interface EntityController {
 
     <T> T getDocumentByID(Class T, Integer id) throws Exception;
 
-    List<DocumentHeader> searchDocumentsByMask(final DocumentHeader mask);
+    List<DocHeader> searchDocumentsByMask(final DocHeader mask);
 
     void shutdown() throws ShutDownException;
 

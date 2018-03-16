@@ -5,8 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import regulation.datamodel.DocumentContainer;
-import regulation.datamodel.DocumentHeader;
+import regulation.datamodel.*;
+import regulation.entity_controller.Filter;
 import regulation.entity_controller.SpringDBController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,6 @@ import regulation.file_controller.IOController;
 
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,7 +25,8 @@ import java.util.List;
 @Controller
 public class WebController {
 
-    Model model;
+    @Resource(name = "udfMapping")
+    private UDFMapping udfMapping = UDFMapping.getInstance();
 
     @Resource(name = "springDBController")
     private SpringDBController springDBController;
@@ -34,28 +34,34 @@ public class WebController {
     @Resource(name = "fileController")
     private IOController fileController;
 
-    List<DocumentHeader> headers;
+    @Resource(name = "filter")
+    private Filter filter;
+
+    List<DocHeader> headers;
+    List<DocHeader> filteredHeaders;
 
     @RequestMapping(value = "/regulation", method = RequestMethod.GET)
     public String index() {
-        return "/index";
+        return "index";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newdocument() {
-        return "/newdocument";
+    public String newdocument(Model model) {
+        model.addAttribute("udfMapping", udfMapping);
+        return "newform";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editDocument(Model model, Integer id) throws Exception {
-        DocumentContainer hdr = springDBController.getDocumentByID(DocumentContainer.class, id);
+        DocContainer hdr = springDBController.getDocumentByID(DocContainer.class, id);
+        model.addAttribute("udfMapping", udfMapping);
         model.addAttribute("hdr", hdr);
-        return "/editpage";
+        return "editform";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveDocument(DocumentHeader edited) throws Exception {
-        DocumentHeader header = springDBController.getDocumentByID(DocumentHeader.class, edited.getDocNum());
+    public String saveDocument(DocHeader edited) throws Exception {
+        DocHeader header = springDBController.getDocumentByID(DocHeader.class, edited.getDocNum());
         header.setDocName(edited.getDocName());
         header.setDocType(edited.getDocType());
         header.setDocDescription(edited.getDocDescription());
@@ -63,47 +69,59 @@ public class WebController {
         header.setMandatoryRU(edited.getMandatoryRU());
         header.setMandatoryRK(edited.getMandatoryRK());
         header.setMandatoryEU(edited.getMandatoryEU());
-        header.setApplicationGeneral(edited.getApplicationGeneral());
-        header.setApplicationMeasurement(edited.getApplicationMeasurement());
-        header.setApplicationInstrumentation(edited.getApplicationInstrumentation());
-        header.setApplicationSafety(edited.getApplicationSafety());
-        header.setApplicationASUTP(edited.getApplicationASUTP());
-        header.setApplicationProcess(edited.getApplicationProcess());
-        header.setApplicationPiping(edited.getApplicationPiping());
-        header.setApplicationElectrical(edited.getApplicationElectrical());
-        header.setApplicationConstruction(edited.getApplicationSafety());
-        header.setApplicationCableRouting(edited.getApplicationCableRouting());
-        header.setApplicationPID(edited.getApplicationPID());
-        header.setApplicationSPDS(edited.getApplicationSPDS());
-        header.setApplicationDocumentDesign(edited.getApplicationDocumentDesign());
-        header.setApplicationForInformation(edited.getApplicationForInformation());
-        header.setApplicationSTP(edited.getApplicationSTP());
-        header.setHashTag01(edited.getHashTag01());
-        header.setHashTag02(edited.getHashTag02());
-        header.setHashTag03(edited.getHashTag03());
-        header.setHashTag04(edited.getHashTag04());
-        header.setHashTag05(edited.getHashTag05());
-        header.setHashTag06(edited.getHashTag06());
+        header.setUpToDate(edited.getUpToDate());
+        header.setUdf01(edited.getUdf01());
+        header.setUdf02(edited.getUdf02());
+        header.setUdf03(edited.getUdf03());
+        header.setUdf04(edited.getUdf04());
+        header.setUdf05(edited.getUdf05());
+        header.setUdf06(edited.getUdf06());
+        header.setUdf07(edited.getUdf07());
+        header.setUdf08(edited.getUdf08());
+        header.setUdf09(edited.getUdf09());
+        header.setUdf10(edited.getUdf10());
+        header.setUdf11(edited.getUdf11());
+        header.setUdf12(edited.getUdf12());
+        header.setUdf13(edited.getUdf13());
+        header.setUdf14(edited.getUdf14());
+        header.setUdf15(edited.getUdf15());
+        header.setUdf16(edited.getUdf16());
+        header.setUdf17(edited.getUdf17());
+        header.setUdf18(edited.getUdf18());
+        header.setUdf19(edited.getUdf19());
+        header.setUdf20(edited.getUdf20());
+        header.setUdf21(edited.getUdf21());
+        header.setUdf22(edited.getUdf22());
+        header.setUdf23(edited.getUdf23());
+        header.setUdf24(edited.getUdf24());
+        header.setUdf25(edited.getUdf25());
+        header.setUdf26(edited.getUdf26());
+        header.setUdf27(edited.getUdf27());
+        header.setUdf28(edited.getUdf28());
+        header.setUdf29(edited.getUdf29());
+        header.setUdf30(edited.getUdf30());
+        header.setUdf31(edited.getUdf31());
+        header.setUdf32(edited.getUdf32());
+        header.setHashTags(edited.getHashTags());
         header.setNotes(edited.getNotes());
         springDBController.updateDocument(header);
-        return "/index";
+        return "index";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String saveDocument(Integer id) throws Exception {
         System.out.println("Deleting id = " + id);
-        return "/index";
+        return "index";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String createNewDocument(@ModelAttribute("mvc-dispatcher") DocumentContainer documentContainer,
+    public String createNewDocument(@ModelAttribute("mvc-dispatcher") DocContainer docContainer,
                                     @RequestParam("file") MultipartFile file) throws IOException {
-
-        documentContainer.setDocFileName(file.getOriginalFilename());
-        documentContainer.setDocStream(file.getBytes());
-        documentContainer.calculateHashSum();
+        docContainer.setDocFileName(file.getOriginalFilename());
+        docContainer.setDocStream(file.getBytes());
+        docContainer.calculateHashSum();
         try {
-            springDBController.uploadDocument(documentContainer);
+            springDBController.uploadDocument(docContainer);
         }
         catch (InvalidDataException ide) {
             System.out.println(ide.getMessage());
@@ -111,29 +129,44 @@ public class WebController {
         catch (DuplicationDataException dde) {
             System.out.println(dde.getMessage());
         }
-        return "/index";
+        return "index";
     }
 
     @RequestMapping(value = "/showdetails", method = RequestMethod.GET)
     public String showDetails(Model model, Integer id) throws Exception {
-        DocumentHeader header = springDBController.getDocumentByID(DocumentHeader.class, id);
+        DocHeader header = springDBController.getDocumentByID(DocHeader.class, id);
         model.addAttribute("hdr", header);
-        return "/details";
+        model.addAttribute("udfMapping", udfMapping);
+        return "details";
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String result(Model model) throws Exception {
         headers = springDBController.getAllDocumentHeaders();
         model.addAttribute("headers", headers);
-        return "/resultpage";
+        return "resultpage";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchGet(Model model) throws Exception {
+        model.addAttribute("udfMapping", udfMapping);
+        return "searchform";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String searchPost(Model model, DocHeader mask) throws Exception {
+        System.out.println(mask);
+        headers = springDBController.getAllDocumentHeaders();
+        filteredHeaders = filter.getFilteredDocumentHeaders(mask, headers);
+        model.addAttribute("udfMapping", udfMapping);
+        model.addAttribute("headers", filteredHeaders);
+        return "resultpage";
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
         public void download(Integer id, HttpServletRequest request,
                                          HttpServletResponse response) throws Exception {
-
-        DocumentContainer document = springDBController.getDocumentByID(DocumentContainer.class, id);
-
+        DocContainer document = springDBController.getDocumentByID(DocContainer.class, id);
         response.setContentType("application/octet-stream");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + changeRussianToLatin(document.getDocFileName()));
         response.setContentLength((int) document.getFileSize());
@@ -153,6 +186,7 @@ public class WebController {
         decodedName = decodedName.replace("ж", "zh");
         decodedName = decodedName.replace("з", "z");
         decodedName = decodedName.replace("и", "i");
+        decodedName = decodedName.replace("й", "j");
         decodedName = decodedName.replace("к", "k");
         decodedName = decodedName.replace("л", "l");
         decodedName = decodedName.replace("м", "m");
@@ -177,5 +211,4 @@ public class WebController {
         decodedName = decodedName.replace("я", "ya");
         return decodedName;
     }
-
 }

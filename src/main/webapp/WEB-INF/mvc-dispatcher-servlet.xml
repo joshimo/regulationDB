@@ -14,12 +14,18 @@
             <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="udfMapping" class="regulation.datamodel.UDFMapping">
+    </bean>
+
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
         <property name="packagesToScan" value="regulation"/>
     </bean>
 
     <bean id="fileController" class="regulation.file_controller.FileController">
+    </bean>
+
+    <bean id="filter" class="regulation.entity_controller.DocFilter">
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">

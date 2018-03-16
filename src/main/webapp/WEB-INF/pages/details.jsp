@@ -6,13 +6,14 @@
     <title>Нормативная база КИП</title>
 </head>
 <style>
-    <%@include file='style.css' %>
+    <%@include file='alt_style.css' %>
 </style>
 <body>
 <h1>Подробное описание документа</h1>
+<div class="main_div">
 <div>
-    <fieldset>
-        <legend>Описание документа</legend>
+    <h3>Описание документа</h3>
+    <div class="inner_div">
         <p>Название документа:<br/>
             <b><i><c:out value="${hdr.docName}"/></i></b>
         </p>
@@ -22,59 +23,71 @@
         <p>Тип документа:<br/>
             <b><i><c:out value="${hdr.docType}"/></i></b>
         </p>
-    </fieldset>
-    <fieldset>
-        <legend>Область действия документа:</legend>
-        <input type="checkbox" name="mandatoryUA" <c:if test="${hdr.mandatoryUA == true}"><c:out value="checked"/></c:if> disabled>Действует в Украине</input><br/>
-        <input type="checkbox" name="mandatoryRU" <c:if test="${hdr.mandatoryRU == true}"><c:out value="checked"/></c:if> disabled>Действует в России</input><br/>
-        <input type="checkbox" name="mandatoryRK" <c:if test="${hdr.mandatoryRK == true}"><c:out value="checked"/></c:if> disabled>Действует в Казахстане</input><br/>
-        <input type="checkbox" name="mandatoryEU" <c:if test="${hdr.mandatoryEU == true}"><c:out value="checked"/></c:if> disabled>Действует в EC</input><br/>
-    </fieldset>
-    <fieldset>
-        <legend>Область применения документа:</legend>
-        <input type="checkbox" name="applicationGeneral" <c:if test="${hdr.applicationGeneral == true}"><c:out value="checked"/></c:if> disabled>Общая</input><br/>
-        <input type="checkbox" name="applicationMeasurement" <c:if test="${hdr.applicationMeasurement == true}"><c:out value="checked"/></c:if> disabled>Технологические измерения</input><br/>
-        <input type="checkbox" name="applicationInstrumentation" <c:if test="${hdr.applicationInstrumentation == true}"><c:out value="checked"/></c:if> disabled>КИП и А</input><br/>
-        <input type="checkbox" name="applicationSafety" <c:if test="${hdr.applicationSafety == true}"><c:out value="checked"/></c:if> disabled>Безопасность</input><br/>
-        <input type="checkbox" name="applicationASUTP" <c:if test="${hdr.applicationASUTP == true}"><c:out value="checked"/></c:if> disabled>АСУ ТП</input><br/>
-        <input type="checkbox" name="applicationProcess" <c:if test="${hdr.applicationProcess == true}"><c:out value="checked"/></c:if> disabled>Технология</input><br/>
-        <input type="checkbox" name="applicationPiping" <c:if test="${hdr.applicationPiping == true}"><c:out value="checked"/></c:if> disabled>Монтаж</input><br/>
-        <input type="checkbox" name="applicationElectrical" <c:if test="${hdr.applicationElectrical == true}"><c:out value="checked"/></c:if> disabled>Электрика</input><br/>
-        <input type="checkbox" name="applicationConstruction" <c:if test="${hdr.applicationConstruction == true}"><c:out value="checked"/></c:if> disabled>Архитектура и строительство</input><br/>
-        <input type="checkbox" name="applicationCableRouting" <c:if test="${hdr.applicationCableRouting == true}"><c:out value="checked"/></c:if> disabled>Прокладка кабеля и кабельных трасс</input><br/>
-        <input type="checkbox" name="applicationPID" <c:if test="${hdr.applicationPID == true}"><c:out value="checked"/></c:if> disabled>Схемы автоматизации</input><br/>
-        <input type="checkbox" name="applicationSPDS" <c:if test="${hdr.applicationSPDS == true}"><c:out value="checked"/></c:if> disabled>СПДС и ЕСКД</input><br/>
-        <input type="checkbox" name="applicationDocumentDesign" <c:if test="${hdr.applicationDocumentDesign == true}"><c:out value="checked"/></c:if> disabled>Разработка проектной документации</input><br/>
-        <input type="checkbox" name="applicationForInformation" <c:if test="${hdr.applicationForInformation == true}"><c:out value="checked"/></c:if> disabled>Для сведения</input><br/>
-        <input type="checkbox" name="applicationSTP" <c:if test="${hdr.applicationSTP == true}"><c:out value="checked"/></c:if> disabled>СТП предприятия</input><br/>
-    </fieldset>
-    <fieldset>
-        <legend>Ключевые слова (#hash_tags):</legend>
-        <p><b><i><c:out value="${hdr.hashTag01}"/></i></b></p>
-        <p><b><i><c:out value="${hdr.hashTag02}"/></i></b></p>
-        <p><b><i><c:out value="${hdr.hashTag03}"/></i></b></p>
-        <p><b><i><c:out value="${hdr.hashTag04}"/></i></b></p>
-        <p><b><i><c:out value="${hdr.hashTag05}"/></i></b></p>
-        <p><b><i><c:out value="${hdr.hashTag06}"/></i></b></p>
-    </fieldset>
-    <fieldset>
-        <legend>Примечания и уточнения:</legend>
+    </div>
+    <h3>Область действия документа</h3>
+    <div class="inner_div">
+        <input type="checkbox" name="mandatoryUA" <c:if test="${hdr.mandatoryUA}"><c:out value="checked"/></c:if> disabled>Действует в Украине<br/>
+        <input type="checkbox" name="mandatoryRU" <c:if test="${hdr.mandatoryRU}"><c:out value="checked"/></c:if> disabled>Действует в России<br/>
+        <input type="checkbox" name="mandatoryRK" <c:if test="${hdr.mandatoryRK}"><c:out value="checked"/></c:if> disabled>Действует в Казахстане<br/>
+        <input type="checkbox" name="mandatoryEU" <c:if test="${hdr.mandatoryEU}"><c:out value="checked"/></c:if> disabled>Действует в EC<br/>
+        <input type="checkbox" name="upToDate" <c:if test="${hdr.upToDate}"><c:out value="checked"/></c:if> disabled>Действует<br/>
+    </div>
+    <h3>Область применения документа</h3>
+    <div class="inner_div">
+        <c:if test="${hdr.udf01}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF01_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf02}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF02_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf03}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF03_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf04}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF04_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf05}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF05_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf06}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF06_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf07}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF07_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf08}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF08_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf09}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF09_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf10}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF10_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf11}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF11_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf12}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF12_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf13}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF13_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf14}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF14_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf15}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF15_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf16}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF16_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf17}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF17_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf18}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF18_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf19}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF19_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf20}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF20_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf21}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF21_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf22}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF22_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf23}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF23_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf24}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF24_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf25}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF25_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf26}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF26_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf27}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF27_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf28}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF28_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf29}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF29_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf30}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF30_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf31}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF31_VALUE}"/><br/></c:if>
+        <c:if test="${hdr.udf32}"><input type="checkbox" checked disabled><c:out value="${udfMapping.UDF32_VALUE}"/><br/></c:if>
+    </div>
+    <h3>Ключевые слова (#hash_tags)</h3>
+    <div class="inner_div">
+        <p><b><i><c:out value="${hdr.hashTags}"/></i></b></p>
+    </div>
+    <h3>Примечания и уточнения</h3>
+    <div class="inner_div">
         <b><i><c:out value="${hdr.notes}"/></i></b>
-    </fieldset>
-    <fieldset>
-        <legend>Файл:</legend>
+    </div>
+    <h3>Файл:</h3>
+    <div class="inner_div">
         <p>Имя файла: <b><i><c:out value="${hdr.docFileName}"/></i></b></p>
-        <p>Размер: <b><i><c:out value="${hdr.fileSize}"/></i></b></p>
-    </fieldset>
+        <p>Размер: <b><i><c:out value="${hdr.fileSize / 1000}k"/></i></b></p>
+    </div>
     <br/>
 </div>
-<div>
-    <fieldset>
-        <form action="edit" method="get">
-            <button type="submit" id="submit" name="id" value=<c:out value="${hdr.docNum}"/>>Редактировать документ</button>
-            <button type="cancel" id="cancel" onclick="history.back(); return false;">Вернуться назад</button>
-        </form>
-    </fieldset>
+<div class="button_div">
+    <form action="edit" method="get">
+        <button type="submit" class="bigbutton" name="id" value=<c:out value="${hdr.docNum}" />>Редактировать документ</button>
+        <button type="submit" class="bigbutton" onclick="history.back(); return false;">Вернуться назад</button>
+    </form>
+</div>
 </div>
 </body>
 </html>

@@ -6,17 +6,21 @@
     <title>Нормативная база КИП</title>
   </head>
   <style>
-    <%@include file='style.css' %>
+    <%@include file='alt_style.css' %>
   </style>
 
   <body>
     <h1>Нормативная база КИП</h1>
-    <div>
-      <a href="/search">#Search page</a><br/><br/>
-      <a href="/all">Показать все документы в базе</a><br/><br/>
-      <a href="/new">Добавление в базу нового документа</a><br/><br/>
-      <a href="/edit">#Edit page</a><br/><br/>
-      <a href="/result">#SearchResult page</a><br/><br/>
+    <div class="index_div">
+      <form action="/all" method="get">
+        <button type="submit" class="giantbutton">Показать все документы в базе</button>
+      </form>
+      <form action="/search" method="get">
+        <button type="submit" class="giantbutton">Расширенный поиск документа в базе</button>
+      </form>
+      <form action="/new" method="get">
+        <button type="submit" class="giantbutton">Добавление в базу нового документа</button>
+      </form>
     </div>
 
   </body>

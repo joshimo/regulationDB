@@ -1,7 +1,7 @@
 package regulation.entity_controller;
 
-import regulation.datamodel.DocumentContainer;
-import regulation.datamodel.DocumentHeader;
+import regulation.datamodel.DocContainer;
+import regulation.datamodel.DocHeader;
 import regulation.entity_controller.exceptions.DuplicationDataException;
 import regulation.entity_controller.exceptions.InvalidDataException;
 import regulation.entity_controller.exceptions.IdNotFoundException;
@@ -57,7 +57,7 @@ public class DBController implements EntityController {
      * */
 
     @Override
-    public void uploadDocument(DocumentContainer upload) throws InvalidDataException, DuplicationDataException {
+    public void uploadDocument(DocContainer upload) throws InvalidDataException, DuplicationDataException {
 
         if (!this.checkDuplication(upload)) {
 
@@ -89,7 +89,7 @@ public class DBController implements EntityController {
             session = ourSessionFactory.openSession();
             if (checkID(id)) {
                 session.beginTransaction();
-                DocumentContainer doc = session.get(DocumentContainer.class, id);
+                DocContainer doc = session.get(DocContainer.class, id);
                 session.delete(doc);
                 session.getTransaction().commit();
                 if (!checkID(id))
@@ -111,11 +111,11 @@ public class DBController implements EntityController {
         if (doc == null)
             throw new InvalidDataException();
 
-        if (doc instanceof DocumentContainer)
-            id = ((DocumentContainer) doc).getDocNum();
+        if (doc instanceof DocContainer)
+            id = ((DocContainer) doc).getDocNum();
 
-        if (doc instanceof DocumentHeader)
-            id = ((DocumentHeader) doc).getDocNum();
+        if (doc instanceof DocHeader)
+            id = ((DocHeader) doc).getDocNum();
 
         validateDocument(doc);
 
@@ -139,14 +139,14 @@ public class DBController implements EntityController {
     }
 
     @Override
-    public List<DocumentHeader> getAllDocumentHeaders() {
+    public List<DocHeader> getAllDocumentHeaders() {
 
-        List<DocumentHeader> headers = new ArrayList<>();
+        List<DocHeader> headers = new ArrayList<>();
         session = ourSessionFactory.openSession();
 
-        Query query = session.createQuery("from DocumentHeader ");
+        Query query = session.createQuery("from DocHeader ");
         for (Object o : query.list())
-            headers.add((DocumentHeader) o);
+            headers.add((DocHeader) o);
 
         session.close();
 
@@ -161,12 +161,12 @@ public class DBController implements EntityController {
 
         try {
             if (checkID(id)) {
-                if (doc instanceof DocumentContainer) {
-                    Query query = session.createQuery("from DocumentContainer where id=" + id);
+                if (doc instanceof DocContainer) {
+                    Query query = session.createQuery("from DocContainer where id=" + id);
                     doc = (T) query.list().get(0);
                 }
-                if (doc instanceof DocumentHeader) {
-                    Query query = session.createQuery("from DocumentHeader where id=" + id);
+                if (doc instanceof DocHeader) {
+                    Query query = session.createQuery("from DocHeader where id=" + id);
                     doc = (T) query.list().get(0);
                 }
             } else
@@ -180,7 +180,7 @@ public class DBController implements EntityController {
     }
 
     @Override
-    public List<DocumentHeader> searchDocumentsByMask(final DocumentHeader mask) {
+    public List<DocHeader> searchDocumentsByMask(final DocHeader mask) {
         return null;
     }
 
@@ -195,7 +195,7 @@ public class DBController implements EntityController {
      * */
 
     private boolean checkID(Integer id) {
-        Query query = session.createQuery("from DocumentHeader where docNum=" + id);
+        Query query = session.createQuery("from DocHeader where docNum=" + id);
         return !query.list().isEmpty();
     }
 
@@ -212,11 +212,11 @@ public class DBController implements EntityController {
         }
     }
 
-    private boolean checkDuplication(DocumentContainer doc) {
+    private boolean checkDuplication(DocContainer doc) {
 
-        List<DocumentHeader> headers = getAllDocumentHeaders();
+        List<DocHeader> headers = getAllDocumentHeaders();
 
-        for (DocumentHeader header : headers)
+        for (DocHeader header : headers)
             if (header.getHashSum() == doc.getHashSum() && header.getFileSize() == doc.getFileSize())
             return true;
 
