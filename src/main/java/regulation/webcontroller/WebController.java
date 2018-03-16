@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import regulation.entity_controller.exceptions.DuplicationDataException;
 import regulation.entity_controller.exceptions.InvalidDataException;
 import regulation.file_controller.IOController;
-
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,16 +52,24 @@ public class WebController {
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public String auth(String userName, String userPassword) {
+    public void auth(String userName, String userPassword,
+                       HttpServletRequest request,
+                       HttpServletResponse response) throws IOException {
         this.userName = userName;
         this.userPassword = userPassword;
-        System.out.println(userName);
-        System.out.println(userPassword);
-        return "index";
+        if (!userName.equals(config.getAdminName()) || !userPassword.equals(config.getAdminPassword()))
+            response.sendRedirect("auth_error");
+        else
+            response.sendRedirect(request.getHeader("referer"));
+    }
+
+    @RequestMapping(value = "/auth_error", method = RequestMethod.GET)
+    public String authError() {
+        return "auth_error";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newdocument(Model model) {
+    public String newdocumentGet(Model model) {
         model.addAttribute("udfMapping", udfMapping);
         if (! (userName.equals(config.getAdminName()) && userPassword.equals(config.getAdminPassword())))
             return "autenthification";
