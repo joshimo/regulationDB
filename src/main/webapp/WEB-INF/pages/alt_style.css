@@ -35,6 +35,10 @@ td, .main_div {
     padding: 10px 20px;
     background: #F8E391;
 }
+.input {
+    height: 25px;
+    border-radius: 3px;
+}
 .index_div {
     text-align: center;
     margin: 10%;
@@ -81,7 +85,7 @@ a:hover {
     box-shadow: 0 0 20px rgba(50,0,0,0.6);
 }
 .bigbutton {
-    height: 32px;
+    height: 36px;
     width: 240px;
     margin: 20px;
     border-radius: 5px;

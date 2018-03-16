@@ -20,7 +20,7 @@
         <p>Краткое описание документа:</p>
         <textarea rows="3" cols="100" name="docDescription" required><c:out value="${hdr.docDescription}"/></textarea><br/>
         <p>Тип документа:</p>
-        <input type="text" name="docType" size="48" value="<c:out value="${hdr.docType}"/>" required/><br/>
+        <input type="text" name="docType" class="input" size="48" value="<c:out value="${hdr.docType}"/>" required/><br/>
     </div>
     <h3>Область действия документа:</h3>
     <div class="inner_div">
@@ -67,7 +67,7 @@
     </div>
     <h3>Ключевые слова (#hash_tags):</h3>
     <div class="inner_div">
-        <input type="text" name="hashTags" size="160" value="<c:out value="${hdr.hashTags}"/>"/><br/>
+        <input type="text" name="hashTags" class="input" size="160" value="<c:out value="${hdr.hashTags}"/>"/><br/>
     </div>
     <h3>Примечания и уточнения:</h3>
     <div class="inner_div">

@@ -11,9 +11,9 @@
     <div class = index_div>
         <form action="/auth" method="post" enctype="multipart/form-data">
             <h4>Имя пользователя:</h4>
-            <input type="text" name="userName" size="36" required/><br/>
+            <input type="text" name="userName" size="36" class="input" required/><br/>
             <h4>Пароль:</h4>
-            <input type="password" name="userPassword" size="36" required/><br/><br/><br/>
+            <input type="password" name="userPassword" size="36" class="input" required/><br/><br/><br/>
             <input type="submit" class="bigbutton" value="Авторизироваться"/>
             <input type="submit" class="bigbutton" value="Отмена" onclick="history.back(); return false;"/>
         </form>
