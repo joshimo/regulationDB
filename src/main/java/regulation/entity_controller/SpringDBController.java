@@ -173,54 +173,6 @@ public class SpringDBController implements EntityController{
     }
 
     @Override
-    public List<DocHeader> searchDocumentsByMask(final DocHeader mask) {
-
-        List<DocHeader> headers;
-        List<DocHeader> searchResults = new ArrayList<>();
-
-        String maskName = "";
-        String maskDescription = "";
-        String maskType = "";
-        String hashTag01 = "";
-        String hashTag02 = "";
-        String hashTag03 = "";
-        String hashTag04 = "";
-        String hashTag05 = "";
-        String hashTag06 = "";
-        Boolean maskMandatoryUA;
-        Boolean maskMandatoryRK;
-        Boolean maskMandatoryRU;
-        Boolean maskMandatoryEU;
-
-        if (mask != null) {
-
-            if (mask.getDocName() != null)
-                maskName = mask.getDocName().toLowerCase().replaceAll(" ", "");
-            if (mask.getDocDescription() != null)
-                maskDescription = mask.getDocDescription().toLowerCase().replaceAll(" ", "");
-            if (mask.getDocType() != null)
-                maskType = mask.getDocType().toLowerCase().replaceAll(" ", "");
-            if (mask.getHashTags() != null)
-                maskType = mask.getHashTags().toLowerCase().replaceAll(" ", "");
-
-            maskMandatoryUA = mask.getMandatoryUA();
-            maskMandatoryRK = mask.getMandatoryRK();
-            maskMandatoryRU = mask.getMandatoryRU();
-            maskMandatoryEU = mask.getMandatoryEU();
-
-            headers = getAllDocumentHeaders();
-
-            for (DocHeader header : headers) {
-
-                if (header.getDocName().toLowerCase().contains(mask.getDocName().toLowerCase()));
-
-            }
-        }
-
-        return searchResults;
-    }
-
-    @Override
     public void shutdown() throws ShutDownException {
         if (sessionFactory.isClosed()) throw new ShutDownException();
         else sessionFactory.close();

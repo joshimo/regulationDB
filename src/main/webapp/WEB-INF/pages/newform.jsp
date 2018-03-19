@@ -11,7 +11,7 @@
     <body>
         <h1>Добавление нового документа в базу</h1>
         <div class="main_div">
-        <form action="/create" method="post" enctype="multipart/form-data">
+        <form action="/regulation/create" method="post" enctype="multipart/form-data">
             <h3>Описание документа</h3>
             <div class="inner_div">
                 <p>Название документа:</p>

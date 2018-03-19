@@ -44,11 +44,17 @@
                 <c:if test="${hdr.mandatoryEU == true}"><td class="tdc">Да</td></c:if>
                 <c:if test="${hdr.mandatoryEU == false}"><td class="tdc">Нет</td></c:if>
                 <td class="tdl"><c:out value="${hdr.notes}"/></td>
-                <td class="tdc"><a href="download?id=<c:out value="${hdr.docNum}"/>">скачать</a></td>
-                <td class="tdc"><a href="showdetails?id=<c:out value="${hdr.docNum}"/>">подробно</a></td>
+                <td class="tdc"><a href="/regulation/download?id=<c:out value="${hdr.docNum}"/>">скачать</a></td>
+                <td class="tdc"><a href="/regulation/showdetails?id=<c:out value="${hdr.docNum}"/>">подробно</a></td>
             </tr>
             </c:forEach>
         </table>
+        <div class="button_div">
+            <form action="/regulation" method="get">
+                <button type="submit" class="bigbutton" onclick="history.back(); return false;">Вернуться назад</button>
+                <button type="submit" class="bigbutton">Главное меню</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

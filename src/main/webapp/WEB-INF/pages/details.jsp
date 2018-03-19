@@ -83,7 +83,7 @@
     <br/>
 </div>
 <div class="button_div">
-    <form action="edit" method="get">
+    <form action="/regulation/edit" method="get">
         <button type="submit" class="bigbutton" name="id" value=<c:out value="${hdr.docNum}" />>Редактировать документ</button>
         <button type="submit" class="bigbutton" onclick="history.back(); return false;">Вернуться назад</button>
     </form>

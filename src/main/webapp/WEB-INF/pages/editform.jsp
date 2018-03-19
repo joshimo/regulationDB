@@ -11,7 +11,7 @@
 <body>
 <h1>Подробное описание документа</h1>
 <div class="main_div">
-<form action="/save" method="post">
+<form action="/regulation/save" method="post">
     <h3>Описание документа</h3>
     <div class="inner_div">
         <input type="text" name="docNum" size="8" value=<c:out value="${hdr.docNum}"/> class="hidden"/>

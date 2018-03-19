@@ -180,11 +180,6 @@ public class DBController implements EntityController {
     }
 
     @Override
-    public List<DocHeader> searchDocumentsByMask(final DocHeader mask) {
-        return null;
-    }
-
-    @Override
     public void shutdown() throws ShutDownException {
         if (ourSessionFactory.isClosed()) throw new ShutDownException();
         else ourSessionFactory.close();

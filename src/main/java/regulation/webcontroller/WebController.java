@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import regulation.entity_controller.exceptions.DuplicationDataException;
+import regulation.entity_controller.exceptions.IdNotFoundException;
 import regulation.entity_controller.exceptions.InvalidDataException;
 import regulation.file_controller.IOController;
 import javax.annotation.Resource;
@@ -51,7 +52,7 @@ public class WebController {
         return "index";
     }
 
-    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    @RequestMapping(value = "/regulation/auth", method = RequestMethod.POST)
     public void auth(String userName, String userPassword,
                        HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
@@ -63,12 +64,19 @@ public class WebController {
             response.sendRedirect(request.getHeader("referer"));
     }
 
-    @RequestMapping(value = "/auth_error", method = RequestMethod.GET)
+    @RequestMapping(value = "/regulation/auth_error", method = RequestMethod.GET)
     public String authError() {
         return "auth_error";
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/regulation/error", method = RequestMethod.GET)
+    public String error(Model model) {
+        model.addAttribute("errorText", "Текстовка ошибки");
+        model.addAttribute("stackTrace", new NullPointerException().getMessage());
+        return "errorpage";
+    }
+
+    @RequestMapping(value = "/regulation/new", method = RequestMethod.GET)
     public String newdocumentGet(Model model) {
         model.addAttribute("udfMapping", udfMapping);
         if (! (userName.equals(config.getAdminName()) && userPassword.equals(config.getAdminPassword())))
@@ -77,114 +85,159 @@ public class WebController {
             return "newform";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editDocument(Model model, Integer id) throws Exception {
+    @RequestMapping(value = "/regulation/edit", method = RequestMethod.GET)
+    public String editDocument(Model model, Integer id) {
         if (! (userName.equals(config.getAdminName()) && userPassword.equals(config.getAdminPassword())))
             return "autenthification";
         else {
-            DocContainer hdr = springDBController.getDocumentByID(DocContainer.class, id);
-            model.addAttribute("udfMapping", udfMapping);
-            model.addAttribute("hdr", hdr);
-            return "editform";
+            try {
+                DocContainer hdr = springDBController.getDocumentByID(DocContainer.class, id);
+                model.addAttribute("udfMapping", udfMapping);
+                model.addAttribute("hdr", hdr);
+                return "editform";
+            } catch (Exception e) {
+                model.addAttribute("errorText", "");
+                model.addAttribute("stackTrace", e.getMessage());
+                return "errorpage";
+            }
         }
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveDocument(DocHeader edited) throws Exception {
-        DocHeader header = springDBController.getDocumentByID(DocHeader.class, edited.getDocNum());
-        header.setDocName(edited.getDocName());
-        header.setDocType(edited.getDocType());
-        header.setDocDescription(edited.getDocDescription());
-        header.setMandatoryUA(edited.getMandatoryUA());
-        header.setMandatoryRU(edited.getMandatoryRU());
-        header.setMandatoryRK(edited.getMandatoryRK());
-        header.setMandatoryEU(edited.getMandatoryEU());
-        header.setUpToDate(edited.getUpToDate());
-        header.setUdf01(edited.getUdf01());
-        header.setUdf02(edited.getUdf02());
-        header.setUdf03(edited.getUdf03());
-        header.setUdf04(edited.getUdf04());
-        header.setUdf05(edited.getUdf05());
-        header.setUdf06(edited.getUdf06());
-        header.setUdf07(edited.getUdf07());
-        header.setUdf08(edited.getUdf08());
-        header.setUdf09(edited.getUdf09());
-        header.setUdf10(edited.getUdf10());
-        header.setUdf11(edited.getUdf11());
-        header.setUdf12(edited.getUdf12());
-        header.setUdf13(edited.getUdf13());
-        header.setUdf14(edited.getUdf14());
-        header.setUdf15(edited.getUdf15());
-        header.setUdf16(edited.getUdf16());
-        header.setUdf17(edited.getUdf17());
-        header.setUdf18(edited.getUdf18());
-        header.setUdf19(edited.getUdf19());
-        header.setUdf20(edited.getUdf20());
-        header.setUdf21(edited.getUdf21());
-        header.setUdf22(edited.getUdf22());
-        header.setUdf23(edited.getUdf23());
-        header.setUdf24(edited.getUdf24());
-        header.setUdf25(edited.getUdf25());
-        header.setUdf26(edited.getUdf26());
-        header.setUdf27(edited.getUdf27());
-        header.setUdf28(edited.getUdf28());
-        header.setUdf29(edited.getUdf29());
-        header.setUdf30(edited.getUdf30());
-        header.setUdf31(edited.getUdf31());
-        header.setUdf32(edited.getUdf32());
-        header.setHashTags(edited.getHashTags());
-        header.setNotes(edited.getNotes());
-        springDBController.updateDocument(header);
+    @RequestMapping(value = "/regulation/save", method = RequestMethod.POST)
+    public String saveDocument(Model model, DocHeader edited) {
+        try {
+            DocHeader header = springDBController.getDocumentByID(DocHeader.class, edited.getDocNum());
+            header.setDocName(edited.getDocName());
+            header.setDocType(edited.getDocType());
+            header.setDocDescription(edited.getDocDescription());
+            header.setMandatoryUA(edited.getMandatoryUA());
+            header.setMandatoryRU(edited.getMandatoryRU());
+            header.setMandatoryRK(edited.getMandatoryRK());
+            header.setMandatoryEU(edited.getMandatoryEU());
+            header.setUpToDate(edited.getUpToDate());
+            header.setUdf01(edited.getUdf01());
+            header.setUdf02(edited.getUdf02());
+            header.setUdf03(edited.getUdf03());
+            header.setUdf04(edited.getUdf04());
+            header.setUdf05(edited.getUdf05());
+            header.setUdf06(edited.getUdf06());
+            header.setUdf07(edited.getUdf07());
+            header.setUdf08(edited.getUdf08());
+            header.setUdf09(edited.getUdf09());
+            header.setUdf10(edited.getUdf10());
+            header.setUdf11(edited.getUdf11());
+            header.setUdf12(edited.getUdf12());
+            header.setUdf13(edited.getUdf13());
+            header.setUdf14(edited.getUdf14());
+            header.setUdf15(edited.getUdf15());
+            header.setUdf16(edited.getUdf16());
+            header.setUdf17(edited.getUdf17());
+            header.setUdf18(edited.getUdf18());
+            header.setUdf19(edited.getUdf19());
+            header.setUdf20(edited.getUdf20());
+            header.setUdf21(edited.getUdf21());
+            header.setUdf22(edited.getUdf22());
+            header.setUdf23(edited.getUdf23());
+            header.setUdf24(edited.getUdf24());
+            header.setUdf25(edited.getUdf25());
+            header.setUdf26(edited.getUdf26());
+            header.setUdf27(edited.getUdf27());
+            header.setUdf28(edited.getUdf28());
+            header.setUdf29(edited.getUdf29());
+            header.setUdf30(edited.getUdf30());
+            header.setUdf31(edited.getUdf31());
+            header.setUdf32(edited.getUdf32());
+            header.setHashTags(edited.getHashTags());
+            header.setNotes(edited.getNotes());
+            springDBController.updateDocument(header);
+            return "index";
+        } catch (IdNotFoundException infe) {
+            model.addAttribute("errorText", "Ошибка сохранения документа: документ не найден в базе");
+            model.addAttribute("stackTrace", infe.getMessage());
+            return "errorpage";
+        } catch (InvalidDataException ide) {
+            model.addAttribute("errorText", "Ошибка сохранения документа: неверно введены данные");
+            model.addAttribute("stackTrace", ide.getMessage());
+            return "errorpage";
+        } catch (Exception e) {
+            model.addAttribute("errorText", "Ошибка сохранения документа");
+            model.addAttribute("stackTrace", e.getMessage());
+            return "errorpage";
+        }
+    }
+
+    @RequestMapping(value = "/regulation/delete", method = RequestMethod.GET)
+    public String deleteDocument(Integer id) throws Exception {
         return "index";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String saveDocument(Integer id) throws Exception {
-        System.out.println("Deleting id = " + id);
-        return "index";
-    }
-
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String createNewDocument(@ModelAttribute("mvc-dispatcher") DocContainer docContainer,
-                                    @RequestParam("file") MultipartFile file) throws IOException {
+    @RequestMapping(value = "/regulation/create", method = RequestMethod.POST)
+    public String createNewDocument(Model model,
+                                    @ModelAttribute("mvc-dispatcher") DocContainer docContainer,
+                                    @RequestParam("file") MultipartFile file) {
         docContainer.setDocFileName(file.getOriginalFilename());
-        docContainer.setDocStream(file.getBytes());
+        try {
+            docContainer.setDocStream(file.getBytes());
+        }
+        catch (IOException ioe) {
+            model.addAttribute("errorText", "Ошибка чтения файла");
+            model.addAttribute("stackTrace", ioe.getMessage());
+            return "errorpage";
+        }
         docContainer.calculateHashSum();
         try {
             springDBController.uploadDocument(docContainer);
         }
         catch (InvalidDataException ide) {
-            System.out.println(ide.getMessage());
+            model.addAttribute("errorText", "Введенных данных не достаточно для создания нового документа, " +
+                    "                               или введенные данные содержат ошибки");
+            model.addAttribute("stackTrace", ide.getMessage());
+            return "errorpage";
         }
         catch (DuplicationDataException dde) {
-            System.out.println(dde.getMessage());
+            model.addAttribute("errorText", "Указанный документ уже существует в базе");
+            model.addAttribute("stackTrace", dde.getMessage());
+            return "errorpage";
         }
         return "index";
     }
 
-    @RequestMapping(value = "/showdetails", method = RequestMethod.GET)
-    public String showDetails(Model model, Integer id) throws Exception {
-        DocHeader header = springDBController.getDocumentByID(DocHeader.class, id);
-        model.addAttribute("hdr", header);
-        model.addAttribute("udfMapping", udfMapping);
+    @RequestMapping(value = "/regulation/showdetails", method = RequestMethod.GET)
+    public String showDetails(Model model, Integer id) {
+        try {
+            DocHeader header = springDBController.getDocumentByID(DocHeader.class, id);
+            model.addAttribute("hdr", header);
+            model.addAttribute("udfMapping", udfMapping);
+        }
+        catch (Exception e) {
+            model.addAttribute("errorText", "Документ не найден!");
+            model.addAttribute("stackTrace", e.getMessage());
+            return "errorpage";
+        }
         return "details";
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public String result(Model model) throws Exception {
-        headers = springDBController.getAllDocumentHeaders();
+    @RequestMapping(value = "/regulation/all", method = RequestMethod.GET)
+    public String result(Model model) {
+        try {
+            headers = springDBController.getAllDocumentHeaders();
+        } catch (Exception e) {
+            model.addAttribute("errorText", "Ошибка доступа к базе!");
+            model.addAttribute("stackTrace", e.getMessage());
+            return "errorpage";
+        }
         model.addAttribute("headers", headers);
         return "resultpage";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String searchGet(Model model) throws Exception {
+    @RequestMapping(value = "/regulation/search", method = RequestMethod.GET)
+    public String searchGet(Model model) {
         model.addAttribute("udfMapping", udfMapping);
         return "searchform";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String searchPost(Model model, DocHeader mask) throws Exception {
+    @RequestMapping(value = "/regulation/search", method = RequestMethod.POST)
+    public String searchPost(Model model, DocHeader mask) {
         System.out.println(mask);
         headers = springDBController.getAllDocumentHeaders();
         filteredHeaders = filter.getFilteredDocumentHeaders(mask, headers);
@@ -193,7 +246,7 @@ public class WebController {
         return "resultpage";
     }
 
-    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    @RequestMapping(value = "/regulation/download", method = RequestMethod.GET)
         public void download(Integer id, HttpServletRequest request,
                                          HttpServletResponse response) throws Exception {
         DocContainer document = springDBController.getDocumentByID(DocContainer.class, id);

@@ -9,7 +9,7 @@
 <body>
 <h1>Авторизация</h1>
 <div class = index_div>
-    <form action="/auth" method="post" enctype="multipart/form-data">
+    <form action="/regulation/auth" method="post" enctype="multipart/form-data">
         <h2>Ошибка авторизации: неправильный логин или пароль!</h2>
         <input type="submit" class="bigbutton" value="Назад" onclick="history.back(); return false;"/>
     </form>

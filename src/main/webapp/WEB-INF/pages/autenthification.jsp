@@ -9,7 +9,7 @@
 <body>
     <h1>Авторизация</h1>
     <div class = index_div>
-        <form action="/auth" method="post" enctype="multipart/form-data">
+        <form action="/regulation/auth" method="post" enctype="multipart/form-data">
             <h4>Имя пользователя:</h4>
             <input type="text" name="userName" size="36" class="input" required/><br/>
             <h4>Пароль:</h4>

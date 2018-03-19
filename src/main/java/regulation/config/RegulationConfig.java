@@ -1,5 +1,6 @@
 package regulation.config;
 
+import javax.servlet.ServletContext;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class RegulationConfig {
     private RegulationConfig() {
         try {
             Properties prop = new Properties();
-            prop.load(new FileInputStream("d:\\ProgTools\\projects\\RegulationDB\\src\\main\\resources\\project.properties"));
+            prop.load(getClass().getClassLoader().getResourceAsStream("project.properties"));
             departmentName = new String(prop.getProperty("department").getBytes("iso-8859-1"), "utf8");
             adminName = new String(prop.getProperty("adminName").getBytes("iso-8859-1"), "utf8");
             adminPassword = new String(prop.getProperty("adminPassword").getBytes("iso-8859-1"), "utf8");

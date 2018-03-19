@@ -11,7 +11,7 @@
 <body>
 <h1>Поиск документа в базе</h1>
 <div class="main_div">
-<form action="/search" method="post" enctype="multipart/form-data">
+<form action="/regulation/search" method="post" enctype="multipart/form-data">
     <h3>Описание документа</h3>
     <div class="inner_div">
         <p>Название документа:</p>

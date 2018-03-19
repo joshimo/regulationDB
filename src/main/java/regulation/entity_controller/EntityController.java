@@ -21,8 +21,6 @@ public interface EntityController {
 
     <T> T getDocumentByID(Class T, Integer id) throws Exception;
 
-    List<DocHeader> searchDocumentsByMask(final DocHeader mask);
-
     void shutdown() throws ShutDownException;
 
 }

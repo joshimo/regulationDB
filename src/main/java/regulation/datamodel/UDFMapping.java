@@ -46,8 +46,7 @@ public class UDFMapping {
     private UDFMapping() {
         try {
             Properties prop = new Properties();
-            prop.load(new FileInputStream("d:\\ProgTools\\projects\\RegulationDB\\src\\main\\resources\\regulation_udfs.properties"));
-
+            prop.load(getClass().getClassLoader().getResourceAsStream("regulation_udfs.properties"));
             UDF01_VALUE = new String(prop.getProperty("UDF01_VALUE").getBytes("iso-8859-1"), "utf8");
             UDF02_VALUE = new String(prop.getProperty("UDF02_VALUE").getBytes("iso-8859-1"), "utf8");
             UDF03_VALUE = new String(prop.getProperty("UDF03_VALUE").getBytes("iso-8859-1"), "utf8");
